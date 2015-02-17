@@ -1089,7 +1089,8 @@ textarea {
   line-height: inherit;
 }
 a {
-  color: #337ab7;
+    /* TODO Change */
+  color: #1EAD1E;
   text-decoration: none;
 }
 a:hover,
@@ -3979,8 +3980,9 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-pills > li.active > a,
 .nav-pills > li.active > a:hover,
 .nav-pills > li.active > a:focus {
-  color: #fff;
-  background-color: #337ab7;
+  color: #f8f8f8;
+  /* TODO Change */
+  background-color: #0E8A0E;
 }
 .nav-stacked > li {
   float: none;
