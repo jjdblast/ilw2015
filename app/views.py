@@ -14,7 +14,20 @@ def index():
         {
             'author': {'nickname': 'Susan'},
             'body': 'The Avengers movie was so cool!'
+        },
+        {
+            'author': {'nickname': 'Blue man'},
+            'body': 'Blah, blah, blah!'
+        },
+        {
+            'author': {'nickname': 'Sarah'},
+            'body': 'Yey!'
+        },
+        {
+            'author': {'nickname': 'Hulk'},
+            'body': "I'm green!"
         }
+
     ]
     return render_template("index.html",
                            title='Home',
