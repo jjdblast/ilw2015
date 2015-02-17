@@ -6,5 +6,6 @@ from app import app
 
 @app.route("/get_coords", methods=['POST'])
 def get_map_coords():
-
-    return jsonify({'message': 'hi'})
+    return str(request.form)
+    # return jsonify({'message': request.data})
+    return jsonify({'message': request.data})

@@ -77,3 +77,8 @@ body {
     border-bottom: 0;
   }
 }
+
+#slider {
+    margin-left: 20px;
+    margin-right: 20px;
+}
