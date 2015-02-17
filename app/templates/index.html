@@ -6,8 +6,8 @@
                 <h1>Hi, {{ user.nickname }}!</h1>
                 <div class="row">
                     {% for post in posts %}
-                    <div class="col-md-4">
-                      {{ post.author.nickname }} says: <b>{{ post.body }}</b>
+                    <div class="col-md-3">
+                    {{ post.author.nickname }} says: <b>{{ post.body }}</b>
                     </div>
                     {% endfor %}
                 </div>

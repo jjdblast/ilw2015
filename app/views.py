@@ -32,4 +32,15 @@ def index():
     return render_template("index.html",
                            title='Home',
                            user=user,
-                           posts=posts)
+                           posts=posts,
+                           active_home=True,
+                           active_about_us=False)
+
+@app.route('/about_us')
+def about_us():
+    students = ["Theo", "Rafael", "Charlie", "Harri"]
+    return render_template("about_us.html",
+                           title='Home',
+                           students=students,
+                           active_home=False,
+                           active_about_us=True)

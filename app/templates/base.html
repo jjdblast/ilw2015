@@ -27,8 +27,18 @@
             <div class="navbar-inner">
                 <a class="navbar-brand" href="#">Title</a>
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="/index">Home</a></li>
-                    <li><a href="/index">Other</a></li>
+                    {% if active_home %}
+                    <li class="active">
+                    {% else %}
+                    <li>
+                    {% endif %}
+                        <a href="/index">Home</a></li>
+                    {% if active_about_us %}
+                    <li class="active">
+                    {% else %}
+                    <li>
+                    {% endif %}
+                    <a href="/about_us">About us</a></li>
                 </ul>
             </div>
         </div>
