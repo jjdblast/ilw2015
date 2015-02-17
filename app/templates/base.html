@@ -16,13 +16,13 @@
     <![endif]-->
 
     {% if title %}
-    <title>{{ title }} - microblog</title>
+    <title>{{ title }} - CitySentiment</title>
     {% else %}
-    <title>microblog</title>
+    <title>CitySentiment</title>
     {% endif %}
   </head>
   <body>
-    <div class="container">
+    <div class="container ">
         <div class="navbar navbar-default">
             <div class="navbar-inner">
                 <a class="navbar-brand" href="#">Title</a>
@@ -43,6 +43,15 @@
             </div>
         </div>
     </div>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+            {% for message in messages %}
+                <li>{{ message }} </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
     {% block content %}{% endblock %}
       <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
