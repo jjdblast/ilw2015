@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<META HTTP-EQUIV="refresh" CONTENT="15">
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Heatmaps</title>
+    <style>
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
+      }
+      #panel {
+        position: absolute;
+        top: 5px;
+        left: 50%;
+        margin-left: -180px;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+      }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=visualization,drawing,key=AIzaSyBmROUiZ37aAcA_dxjlwnkdmEBW3qIxos0"></script>
+    <script>
+// Adding 500 Data Points
+var map, pointarray, heatmap;
+
+var taxiData = [
+  {location: new google.maps.LatLng(55.951663,-3.206273), weight: 5},
+  {location: new google.maps.LatLng(55.954708,-3.302416), weight: 1},
+  {location: new google.maps.LatLng(55.97194,-3.224334), weight: 1},
+  {location: new google.maps.LatLng(55.959472,-3.249847), weight: 3}
+];
+
+function initialize() {
+  var mapOptions = {
+    zoom: 13,
+    center: new google.maps.LatLng(55.953, -3.188),
+    mapTypeId: google.maps.MapTypeId.MAP
+  };
+
+  map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+
+  var pointArray = new google.maps.MVCArray(taxiData);
+
+  heatmap = new google.maps.visualization.HeatmapLayer({
+    data: pointArray
+  });
+
+  heatmap.setMap(map);
+}
+
+function toggleHeatmap() {
+  heatmap.setMap(heatmap.getMap() ? null : map);
+}
+
+function changeGradient() {
+  var gradient = [
+	'rgba(165,0,38, 0)',
+// 'rgb(142,1,82)',
+// 'rgb(197,27,125)',
+'rgb(222,119,174)',
+// 'rgb(241,182,218)',
+'rgb(253,224,239)',
+'rgb(230,245,208)',
+'rgb(184,225,134)',
+'rgb(127,188,65)',
+// 'rgb(77,146,33)',
+// 'rgb(39,100,25)'
+
+  ]
+  heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
+}
+
+function changeRadius() {
+  heatmap.set('radius', heatmap.get('radius') ? null : 30);
+}
+
+function changeOpacity() {
+  heatmap.set('opacity', heatmap.get('opacity') ? null : 1);
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+function startup() {
+	changeRadius();
+	changeOpacity();
+	changeGradient();
+	}
+    </script>
+  </head>
+
+  <body onload="startup()">
+<!--     <div id="panel">
+      <button onclick="toggleHeatmap()">Toggle Heatmap</button>
+      <button onclick="changeGradient()">Change gradient</button>
+      <button onclick="changeRadius()">Change radius</button>
+      <button onclick="changeOpacity()">Change opacity</button>
+    </div> -->
+    <div id="map-canvas"></div>
+  </body>
+</html>
