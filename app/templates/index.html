@@ -5,8 +5,8 @@
         <div class="row">
            <div class="col-md-12">
                 <div class="row">
-                    <div id="slider" class=" center-block"></div>
-                    <div id="slider_value"></div>
+                    <div id="slider" class="center-block"></div>
+                    <div class="pull-right"><h3 id="slider_value"> </h3></div>
                 </div>
            </div>
         </div>
@@ -17,9 +17,10 @@
   <script>
 $( document ).ready(function() {
     $("#slider").slider({
-        value: 2,
+        //TODO make dynamic with hours and days
+        value: 50,
         min: 0,
-        max:10,
+        max:100,
         slide: function( event, ui ) {
             $("#slider_value").html(ui.value);
             ui.value;
