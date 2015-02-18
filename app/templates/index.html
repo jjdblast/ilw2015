@@ -7,9 +7,10 @@
                 <div class="row">
                     <div class="container">
                         <p>Welcome to CitySentiment! Below is a map of Edinburgh with an overlay of the sentiment
-                        of parts of the city. The more blue a region is, the more positive the comments coming from
-                        that region are. The more red, the more negative. Please select the dates for which you would
-                        like to see the sentiment for.</p>
+                            of parts of the city. The more blue a region is, the more positive the comments coming from
+                            that region are. The more red, the more negative. Please select the dates for which you
+                            would
+                            like to see the sentiment for.</p>
                     </div>
                     <div class="container">
                         <div id="map-canvas"></div>
@@ -32,13 +33,14 @@
     <script>
         // Not sure if this works like this
         var pointArray;
+        var map, heatmap;
+
         $(document).ready(function () {
-            var map, heatmap;
 
             var sentimentData = [
-{#                {location: new google.maps.LatLng(55.951663, -3.206273), weight: 5},#}
-{#                {location: new google.maps.LatLng(55.954708, -3.302416), weight: 1},#}
-{#                {location: new google.maps.LatLng(55.97194, -3.224334), weight: 1},#}
+                {#                {location: new google.maps.LatLng(55.951663, -3.206273), weight: 5},#}
+                {#                {location: new google.maps.LatLng(55.954708, -3.302416), weight: 1},#}
+                {#                {location: new google.maps.LatLng(55.97194, -3.224334), weight: 1},#}
                 {location: new google.maps.LatLng(55.959472, -3.249847), weight: 3}
             ];
 
@@ -112,9 +114,25 @@
                     method: "POST",
                     complete: function (a, b) {
                         var respJSON = $.parseJSON(a.responseText);
-                        alert(respJSON["points"][0]["location"])
-                        window.alert(a.responseText);
-                        console.log(a);
+                        {#                        alert(respJSON["points"][0]["location"]);#}
+                        {#                        var sentimentData = [#}
+                        {#                {location: new google.maps.LatLng(55.951663, -3.206273), weight: 5},#}
+                        //TODO Delete
+                        var sentimentData = [];
+                        for (var i = 0; i < respJSON["points"].length; i++) {
+                            sentimentData.push({location: new google.maps.LatLng(respJSON["points"][i]["location"]),
+                                weight: respJSON["points"][i]["weight"]});
+                        }
+{#                        alert(sentimentData);#}
+                        // Change this to change heatmap
+                        pointArray = new google.maps.MVCArray(sentimentData);
+
+                        heatmap = new google.maps.visualization.HeatmapLayer({
+                            data: pointArray
+                        });
+                        heatmap.setMap(map);
+{#                        window.alert(a.responseText);#}
+{#                        console.log(a);#}
                     }
                 })
             }
