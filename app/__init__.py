@@ -5,3 +5,4 @@ app.config.from_object('config')
 
 from . import views
 from . import server
+

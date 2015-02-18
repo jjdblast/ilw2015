@@ -1,13 +1,14 @@
 __author__ = 'theopavlakou'
 
-from flask import jsonify, request
+from flask import jsonify, request, url_for
 
 from app import app
 
-@app.route("/get_coords", methods=['POST'])
+@app.route("/get_coords", methods=["GET", 'POST'])
 def get_map_coords():
-    return str(request.form)
-    # return jsonify({'message': request.data})
-    #TODO here we must get the Tweets relevant, turn them
-    #into JSON format.
-    return jsonify({'message': request.data})
+    #TODO Now we will fake the results
+    print(request.form["data_value"])
+    print(jsonify({"message": request.form["data_value"]}))
+    return jsonify(message=request.form["data_value"])
+
+
