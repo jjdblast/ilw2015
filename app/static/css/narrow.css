@@ -88,3 +88,14 @@ body {
     margin-left: 40px;
     margin-right: 40px;
 }
+
+.map-canvas {
+  .box-sizing(content-box);
+
+}
+html, body, #map-canvas {
+    height: 200px;
+    width: 100%;
+    margin: 0px;
+    padding: 20px
+}

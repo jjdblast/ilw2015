@@ -3,42 +3,62 @@
 
     <div class="container">
         <div class="row">
-           <div class="col-md-12">
+            <div class="col-md-12">
                 <div class="row">
+                    <div id="map-canvas"></div>
                     <div id="slider" class="center-block"></div>
-                    <div class="pull-right"><h3 id="slider_value"> </h3></div>
+                    <div class="pull-right"><h3 id="slider_value"></h3></div>
                 </div>
-           </div>
+            </div>
         </div>
     </div>
 {% endblock %}
 
 {% block scripts %}
-  <script>
-$( document ).ready(function() {
-    $("#slider").slider({
-        //TODO make dynamic with hours and days
-        value: 50,
-        min: 0,
-        max:100,
-        slide: function( event, ui ) {
-            $("#slider_value").html(ui.value);
-            ui.value;
-        },
-        stop: function( event, ui ) {
-            console.log(ui);
-            $.ajax("/get_coords", {
-                data: {'data_value': ui.value},
-                method: "POST",
-                complete: function(a, b) {
-                    console.log(a);
-                    console.log(b);
-                }
-            })
-        }
-    });
 
-    // New guys here
-});
-  </script>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=visualization,drawing,key=AIzaSyBmROUiZ37aAcA_dxjlwnkdmEBW3qIxos0"></script>
+
+    <script>
+        $(document).ready(function () {
+
+
+            var map;
+
+            function initialize() {
+                var mapOptions = {
+                    zoom: 8,
+                    center: new google.maps.LatLng(-34.397, 150.644),
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                map = new google.maps.Map(document.getElementById('map-canvas'),
+                        mapOptions);
+            }
+
+            google.maps.event.addDomListener(window, 'load', initialize);
+
+{#            $("#slider").slider({#}
+{#                //TODO make dynamic with hours and days#}
+{#                value: 50,#}
+{#                min: 0,#}
+{#                max: 100,#}
+{#                slide: function (event, ui) {#}
+{#                    $("#slider_value").html(ui.value);#}
+{#                    ui.value;#}
+{#                },#}
+{#                stop: function (event, ui) {#}
+{#                    console.log(ui);#}
+{#                    $.ajax("/get_coords", {#}
+{#                        data: {'data_value': ui.value},#}
+{#                        method: "POST",#}
+{#                        complete: function (a, b) {#}
+{#                            console.log(a);#}
+{#                            console.log(b);#}
+{#                        }#}
+{#                    })#}
+{#                }#}
+{#            });#}
+
+        });
+
+    </script>
 {% endblock %}
