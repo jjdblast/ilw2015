@@ -91,6 +91,7 @@
         });
 
 
+        $("#slider_value").html(50);
         $("#slider").slider({
             //TODO make dynamic with hours and days
             value: 50,
@@ -98,7 +99,6 @@
             max: 100,
             slide: function (event, ui) {
                 $("#slider_value").html(ui.value);
-                ui.value;
             },
             stop: function (event, ui) {
                 console.log(ui);
