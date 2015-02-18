@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -29,44 +29,47 @@
     <script src="/static/js/jquery-ui.js"></script>
 
     {% if title %}
-    <title>{{ title }} - CitySentiment</title>
+        <title>{{ title }} - CitySentiment</title>
     {% else %}
-    <title>CitySentiment</title>
+        <title>CitySentiment</title>
     {% endif %}
-  </head>
-  <body>
-    <div class="container ">
-        <div class="header">
-            <nav>
-                    <ul class="nav nav-pills pull-right">
-                        {% if active_home %}
-                        <li role="presentation" class="active">
-                        {% else %}
-                        <li role="presentation">
-                        {% endif %}
-                            <a href="/index">Home</a></li>
-                        {% if active_about_us %}
-                        <li class="active">
-                        {% else %}
-                        <li>
-                        {% endif %}
-                        <a href="/about_us">About us</a></li>
-                    </ul>
-            </nav>
-            <h2 class="text-muted" href="#">CitySentiment</h2>
+</head>
 
-        </div>
+<body>
+<div class="container ">
+    <div class="header">
+        <nav>
+            <ul class="nav nav-pills pull-right">
+                {% if active_home %}
+                    <li role="presentation" class="active">
+                        {% else %}
+                    <li role="presentation">
+                {% endif %}
+                <a href="/index">Home</a></li>
+                {% if active_about_us %}
+                    <li class="active">
+                        {% else %}
+                    <li>
+                {% endif %}
+                <a href="/about_us">About us</a></li>
+            </ul>
+        </nav>
+        <h2 class="text-muted" href="#">CitySentiment</h2>
+
     </div>
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul>
+</div>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul>
             {% for message in messages %}
                 <li>{{ message }} </li>
             {% endfor %}
         </ul>
-        {% endif %}
-    {% endwith %}
-    {% block content %}{% endblock %}
-  </body>
-    {% block scripts %}{% endblock %}
+    {% endif %}
+{% endwith %}
+{% block content %}{% endblock %}
+
+</body>
+{% block scripts %}{% endblock %}
+
 </html>
