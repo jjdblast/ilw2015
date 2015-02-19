@@ -99,12 +99,12 @@
         });
 
 
-        $("#slider_value").html(50);
+        $("#slider_value").html(5);
         $("#slider").slider({
             //TODO make dynamic with hours and days
-            value: 50,
+            value: 5,
             min: 0,
-            max: 100,
+            max: 10,
             slide: function (event, ui) {
                 $("#slider_value").html(ui.value);
             },
