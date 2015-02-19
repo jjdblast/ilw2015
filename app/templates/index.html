@@ -20,16 +20,17 @@
                         <div id="slider" class="col-md-9 pull-left"></div>
                         <div class="col-md-1 pull-left"><h3 id="slider_value"></h3></div>
                     </div>
-                    <div class="container">
-                        <div class="col-md-5">
-                        <select name="date_selector" id="date_selector" class="form-control">
-                            {% for date in available_dates %}
-                            <option>{{ date }}</option>
-                            {% endfor %}
-                        </select>
-                        <button type="submit" class="btn btn-default">Submit</button>
+                        <div class="col-md-6 pull-left">
+                            <h2 id="select_date_text">Please select a date: </h2>
                         </div>
-                    </div>
+                        <div class="col-md-5 pull-right">
+                            <select name="date_selector" id="date_selector" class="form-control">
+                                {% for date in available_dates %}
+                                    <option>{{ date }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
                     {# Add button here for streaming #}
 
                 </div>
@@ -41,182 +42,205 @@
 {% block scripts %}
 
     <script
-		src="https://maps.googleapis.com/maps/api/js?libraries=visualization,drawing,key=AIzaSyBmROUiZ37aAcA_dxjlwnkdmEBW3qIxos0">
+            src="https://maps.googleapis.com/maps/api/js?libraries=visualization,drawing,key=AIzaSyBmROUiZ37aAcA_dxjlwnkdmEBW3qIxos0">
     </script>
-    <script src={{ url_for('static', filename='js/mapOptions.js')}}></script>
+    <script src={{ url_for('static', filename='js/mapOptions.js') }}></script>
 
     <script>
 
-        // Not sure if this works like this
-        var map, pointsOnMap, pointsJSON, started, counter;
-        function initialize() {
-            // Create the map
-            var mapDiv = document.getElementById('map-canvas');
-            map = new google.maps.Map(mapDiv, mapOptions);
-            // Specify map style
-            map.setOptions({styles: styles});
-            pointsOnMap = [];
-            setInterval(addPoint, 10);
-            started = false;
-            pointsJSON = $.parseJSON("{}")
-            counter = 0;
-            posNegMod = 0;
-        }
+    // Not sure if this works like this
+    var map, pointsOnMap, pointsJSON, started, counter;
+    function initialize() {
+        // Create the map
+        var mapDiv = document.getElementById('map-canvas');
+        map = new google.maps.Map(mapDiv, mapOptions);
+        // Specify map style
+        map.setOptions({styles: styles});
+        pointsOnMap = [];
+        setInterval(addPoint, 10);
+        started = false;
+        pointsJSON = $.parseJSON("{}")
+        counter = 0;
+        posNegMod = 0;
+    }
 
-        function addPoint() {
-            if(!jsonIsEmpty(pointsJSON)) {
-                // If this is true, go for positive
-                if ((posNegMod % 2) == 0 && counter < pointsJSON["1"].length) {
-                    var pt = new google.maps.LatLng(pointsJSON["1"][counter]["latitude"],
-                            pointsJSON["1"][counter]["longitude"]);
-                    counter++;
-                    var positiveOptions =
-                    {
-                        strokeColor: '#ffff00',
-                        strokeOpacity: 0.5,
-                        strokeWeight: 0,
-                        fillColor: '#ffff00',
-                        fillOpacity: 0.3,
-                        map: map,
-                        center: pt,
-                        radius: 100
-                    };
-                    pointsOnMap.push(new google.maps.Circle(positiveOptions));
-                } else if (counter < pointsJSON["-1"].length) {
-                    var pt = new google.maps.LatLng(pointsJSON["-1"][counter]["latitude"],
-                            pointsJSON["-1"][counter]["longitude"]);
-                    counter++;
-                    var negativeOptions =
-                    {
-                        strokeColor: '#0000FF',
-                        strokeOpacity: 0.5,
-                        strokeWeight: 0,
-                        fillColor: '#0000FF',
-                        fillOpacity: 0.3,
-                        map: map,
-                        center: pt,
-                        radius: 100
-                    };
-                    pointsOnMap.push(new google.maps.Circle(negativeOptions));
-                }
-                posNegMod++;
-            }
-        }
-
-        function addPoints(data) {
-            clearPointsOnMap();
-
-            var positiveOptions;
-            for (var index in data["1"]) {
-                positiveOptions = {
+    function addPoint() {
+        if (!jsonIsEmpty(pointsJSON)) {
+            // If this is true, go for positive
+            if ((posNegMod % 2) == 0 && counter < pointsJSON["1"].length) {
+                var pt = new google.maps.LatLng(pointsJSON["1"][counter]["latitude"],
+                        pointsJSON["1"][counter]["longitude"]);
+                counter++;
+                var positiveOptions =
+                {
                     strokeColor: '#ffff00',
                     strokeOpacity: 0.5,
                     strokeWeight: 0,
                     fillColor: '#ffff00',
                     fillOpacity: 0.3,
                     map: map,
-                    center: new google.maps.LatLng(data["1"][index]["latitude"],
-                                data["1"][index]['longitude']),
+                    center: pt,
                     radius: 100
                 };
                 pointsOnMap.push(new google.maps.Circle(positiveOptions));
-            }
-
-            var negativeOptions;
-            for (var index in data["-1"]) {
-                negativeOptions = {
+            } else if (counter < pointsJSON["-1"].length) {
+                var pt = new google.maps.LatLng(pointsJSON["-1"][counter]["latitude"],
+                        pointsJSON["-1"][counter]["longitude"]);
+                counter++;
+                var negativeOptions =
+                {
                     strokeColor: '#0000FF',
                     strokeOpacity: 0.5,
                     strokeWeight: 0,
                     fillColor: '#0000FF',
                     fillOpacity: 0.3,
                     map: map,
-                    center: new google.maps.LatLng(data["-1"][index]["latitude"],
-                                data["-1"][index]['longitude']),
+                    center: pt,
                     radius: 100
                 };
                 pointsOnMap.push(new google.maps.Circle(negativeOptions));
             }
+            posNegMod++;
+        }
+    }
+
+    function addPoints(data) {
+        clearPointsOnMap();
+
+        var positiveOptions;
+        for (var index in data["1"]) {
+            positiveOptions = {
+                strokeColor: '#ffff00',
+                strokeOpacity: 0.5,
+                strokeWeight: 0,
+                fillColor: '#ffff00',
+                fillOpacity: 0.3,
+                map: map,
+                center: new google.maps.LatLng(data["1"][index]["latitude"],
+                        data["1"][index]['longitude']),
+                radius: 100
+            };
+            pointsOnMap.push(new google.maps.Circle(positiveOptions));
         }
 
-        function clearPointsOnMap() {
-            for (var i in pointsOnMap) {
-                pointsOnMap[i].setMap(null);
-            }
+        var negativeOptions;
+        for (var index in data["-1"]) {
+            negativeOptions = {
+                strokeColor: '#0000FF',
+                strokeOpacity: 0.5,
+                strokeWeight: 0,
+                fillColor: '#0000FF',
+                fillOpacity: 0.3,
+                map: map,
+                center: new google.maps.LatLng(data["-1"][index]["latitude"],
+                        data["-1"][index]['longitude']),
+                radius: 100
+            };
+            pointsOnMap.push(new google.maps.Circle(negativeOptions));
         }
+    }
 
-
-        function showAlert() {
-            window.alert('Jess is da best');
+    function clearPointsOnMap() {
+        for (var i in pointsOnMap) {
+            pointsOnMap[i].setMap(null);
         }
+    }
 
-        google.maps.event.addDomListener(window, 'load', initialize);
 
-        function formatDate(d) {
+    function showAlert() {
+        window.alert('Jess is da best');
+    }
 
-            var day = d.getDate();
-            var year = d.getYear();
-            var month = -1;
-            if (d.getMonth() < 9) {
-                month = "0" + (d.getMonth()+1) ;
-            } else {
-                month = (d.getMonth()+1);
-            }
-            return day + "/"
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+    function formatDate(d) {
+
+        var day = d.getDate();
+        var year = d.getYear();
+        var month = -1;
+        if (d.getMonth() < 9) {
+            month = "0" + (d.getMonth() + 1);
+        } else {
+            month = (d.getMonth() + 1);
+        }
+        return day + "/"
                 + month + "/"
                 + year;
-        }
-{#        var initialDate = "15/02/2015";#}
-{#        var initialDate = new Date(15,01,09);#}
-        var initialDate = new Date(15, 01, 09);
-{#        initialDate.setDate(initialDate.getDate() + 2);#}
-        var dateString = formatDate(initialDate);
-        $("#date_selector").selectmenu({
-                change: function(event, data) {
-                    var newDate = data.item.value;
-                }
-        });
-        $("#slider_value").html(dateString);
-        $("#slider").slider({
-            //TODO Should be this and make dynamic with hours and days
-{#            value: initialDate,#}
-            value: 0,
-            min: 0,
-            max: 10,
-            slide: function (event, ui) {
-                var newDate = new Date(initialDate);
-                newDate.setDate(initialDate.getDate() + ui.value);
-                var dateString = formatDate(newDate);
-{#                var newDate = initialDate.getDate() + 1;#}
-                $("#slider_value").html(dateString);
-            },
-            stop: function (event, ui) {
-{#                console.log(ui);#}
-                $.ajax("/get_coords", {
-                    data: {'offset': ui.value, 'initial_date': formatDate(initialDate)},
-                    method: "POST",
-                    complete: function (a, b) {
-                        var respJSON = $.parseJSON(a.responseText);
-                        console.log(respJSON);
-                        if (jsonIsEmpty(respJSON)) {
-                            clearPointsOnMap();
-                            counter = 0;
-                            posNegMod = 0;
-                            alert("No data for that day!");
-                            pointsJSON = $.parseJSON("{}");
-                        } else {
-                            clearPointsOnMap();
-                            counter = 0;
-                            posNegMod = 0;
-                            pointsJSON = respJSON;
+    }
+    {#        var initialDate = "15/02/2015";#}
+    {#        var initialDate = new Date(15,01,09);#}
+    var initialDate = new Date(15, 01, 09);
+    {#        initialDate.setDate(initialDate.getDate() + 2);#}
+    var dateString = formatDate(initialDate);
+    $("#date_selector").selectmenu({
+        change: function (event, data) {
+            var newDate = data.item.value;
+            $.ajax("/get_coords", {
+                data: {'date': data.item.value},
+                method: "POST",
+                complete: function (a, b) {
+                    var respJSON = $.parseJSON(a.responseText);
+                    console.log(respJSON);
+                    if (jsonIsEmpty(respJSON)) {
+                        clearPointsOnMap();
+                        counter = 0;
+                        posNegMod = 0;
+                        alert("No data for that day!");
+                        pointsJSON = $.parseJSON("{}");
+                    } else {
+                        clearPointsOnMap();
+                        counter = 0;
+                        posNegMod = 0;
+                        pointsJSON = respJSON;
 
-{#                            addPoints(respJSON);#}
-                        }
-
+                        {#                            addPoints(respJSON);#}
                     }
-                })
-            }
-        });
+
+                }
+            })
+        }
+    });
+    {#        $("#slider_value").html(dateString);#}
+    {#        $("#slider").slider({#}
+    {#            //TODO Should be this and make dynamic with hours and days#}
+    {#            value: initialDate,#}
+    {#            value: 0,#}
+    {#            min: 0,#}
+    {#            max: 10,#}
+    {#            slide: function (event, ui) {#}
+    {#                var newDate = new Date(initialDate);#}
+    {#                newDate.setDate(initialDate.getDate() + ui.value);#}
+    {#                var dateString = formatDate(newDate);#}
+    {#                var newDate = initialDate.getDate() + 1;#}
+    {#                $("#slider_value").html(dateString);#}
+    {#            },#}
+    {#            stop: function (event, ui) {#}
+    {#                console.log(ui);#}
+    {#                $.ajax("/get_coords", {#}
+    {#                    data: {'offset': ui.value, 'initial_date': formatDate(initialDate)},#}
+    {#                    method: "POST",#}
+    {#                    complete: function (a, b) {#}
+    {#                        var respJSON = $.parseJSON(a.responseText);#}
+    {#                        console.log(respJSON);#}
+    {#                        if (jsonIsEmpty(respJSON)) {#}
+    {#                            clearPointsOnMap();#}
+    {#                            counter = 0;#}
+    {#                            posNegMod = 0;#}
+    {#                            alert("No data for that day!");#}
+    {#                            pointsJSON = $.parseJSON("{}");#}
+    {#                        } else {#}
+    {#                            clearPointsOnMap();#}
+    {#                            counter = 0;#}
+    {#                            posNegMod = 0;#}
+    {#                            pointsJSON = respJSON;#}
+    {##}
+    {#                            addPoints(respJSON);#}
+    {#                        }#}
+    {##}
+    {#                    }#}
+    {#                })#}
+    {#            }#}
+    {#        });#}
 
     function jsonIsEmpty(jsonObject) {
 

@@ -99,3 +99,8 @@ html, body, #map-canvas {
     width: 100%;
     margin: 0px;
 }
+
+#select_date_text {
+    padding: 5px;
+    margin: 0px;
+}
