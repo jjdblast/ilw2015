@@ -50,8 +50,10 @@
 
         function addPoints(data) {
             clearPointsOnMap();
+
+            var positiveOptions;
             for (var index in data["1"]) {
-                var positiveOptions = {
+                positiveOptions = {
                     strokeColor: '#ffff00',
                     strokeOpacity: 0.5,
                     strokeWeight: 0,
@@ -62,13 +64,12 @@
                                 data["1"][index]['longitude']),
                     radius: 100
                 };
-                // Add this circle to the map
-{#                addCircle(positiveOptions);#}
                 pointsOnMap.push(new google.maps.Circle(positiveOptions));
             }
 
+            var negativeOptions;
             for (var index in data["-1"]) {
-                var negativeOptions = {
+                negativeOptions = {
                     strokeColor: '#0000FF',
                     strokeOpacity: 0.5,
                     strokeWeight: 0,
@@ -79,12 +80,8 @@
                                 data["-1"][index]['longitude']),
                     radius: 100
                 };
-                // Add this circle to the map
-{#                addCircle(negativeOptions);#}
                 pointsOnMap.push(new google.maps.Circle(negativeOptions));
-
             }
-
         }
 
         function clearPointsOnMap() {
@@ -140,19 +137,17 @@
                     complete: function (a, b) {
                         var respJSON = $.parseJSON(a.responseText);
                         console.log(respJSON);
-                        //TODO should check if any are empty
-{#                        addPoints(respJSON);#}
                         if (jsonIsEmpty(respJSON)) {
                             alert("No data for that day!")
                         } else {
                             addPoints(respJSON);
                         }
-{#                        addPoints({});#}
 
                     }
                 })
             }
         });
+
     function jsonIsEmpty(jsonObject) {
         if (Object.keys(jsonObject).length == 0) {
             return true;
