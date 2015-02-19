@@ -5,8 +5,15 @@ from .forms import LoginForm
 @app.route('/')
 @app.route('/index')
 def index():
+    available_dates = ["09-02-15",
+                       "10-02-15",
+                       "11-02-15",
+                       "12-02-15",
+                       "13-02-15",
+                       "14-02-15"]
     return render_template("index.html",
                            title='Home',
+                           available_dates=available_dates,
                            active_home=True,
                            active_about_us=False)
 

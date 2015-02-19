@@ -1,0 +1,68 @@
+# OpenVPN client configuration for Informatics endpoints
+# $Id: Informatics-all-Forum.ovpn,v 1.5 2015/01/27 07:16:01 gdmr Exp $
+
+# This configuration file connects to the OpenVPN endpoint located
+# in the Forum.  It passes ALL traffic through the tunnel, including
+# traffic destined for non-Edinburgh sites.  It uses
+# password-authentication to the endpoint.
+
+dev tun
+proto udp
+remote openvpn160.inf.ed.ac.uk
+pull
+rport 5003
+redirect-gateway def1
+
+tls-client
+<ca>
+-----BEGIN CERTIFICATE-----
+MIIEQjCCA6ugAwIBAgIBADANBgkqhkiG9w0BAQQFADCBzTELMAkGA1UEBhMCR0Ix
+ETAPBgNVBAgTCFNjb3RsYW5kMRIwEAYDVQQHEwlFZGluYnVyZ2gxJDAiBgNVBAoT
+G1RoZSBVbml2ZXJzaXR5IG9mIEVkaW5idXJnaDEkMCIGA1UECxMbVGhlIFVuaXZl
+cnNpdHkgb2YgRWRpbmJ1cmdoMScwJQYDVQQDEx5UaGUgVW5pdmVyc2l0eSBvZiBF
+ZGluYnVyZ2ggQ0ExIjAgBgkqhkiG9w0BCQEWE3Bvc3RtYXN0ZXJAZWQuYWMudWsw
+HhcNMDEwOTA0MDk1MjMyWhcNMjkwMTIwMDk1MjMyWjCBzTELMAkGA1UEBhMCR0Ix
+ETAPBgNVBAgTCFNjb3RsYW5kMRIwEAYDVQQHEwlFZGluYnVyZ2gxJDAiBgNVBAoT
+G1RoZSBVbml2ZXJzaXR5IG9mIEVkaW5idXJnaDEkMCIGA1UECxMbVGhlIFVuaXZl
+cnNpdHkgb2YgRWRpbmJ1cmdoMScwJQYDVQQDEx5UaGUgVW5pdmVyc2l0eSBvZiBF
+ZGluYnVyZ2ggQ0ExIjAgBgkqhkiG9w0BCQEWE3Bvc3RtYXN0ZXJAZWQuYWMudWsw
+gZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBALM11Ck+SRrmCP3hFVA2IQXm8QaU
+JTjDu6DC8vlsY7oFMy234LZERA0fMWErlP2bhUXHBV6GNWYBRnyyMQ632TtJ0P9y
+q/+xNkd+bNbzMQjJ8S2I+buTDpjxEqwTMD2eFQjWP3PRAMN4P/LAYTTN4TCxJOzw
+pKVgiXuWIUTb6kDBAgMBAAGjggEuMIIBKjAdBgNVHQ4EFgQUX16phlfpMz3v8f9i
+e7lNlAgbfq0wgfoGA1UdIwSB8jCB74AUX16phlfpMz3v8f9ie7lNlAgbfq2hgdOk
+gdAwgc0xCzAJBgNVBAYTAkdCMREwDwYDVQQIEwhTY290bGFuZDESMBAGA1UEBxMJ
+RWRpbmJ1cmdoMSQwIgYDVQQKExtUaGUgVW5pdmVyc2l0eSBvZiBFZGluYnVyZ2gx
+JDAiBgNVBAsTG1RoZSBVbml2ZXJzaXR5IG9mIEVkaW5idXJnaDEnMCUGA1UEAxMe
+VGhlIFVuaXZlcnNpdHkgb2YgRWRpbmJ1cmdoIENBMSIwIAYJKoZIhvcNAQkBFhNw
+b3N0bWFzdGVyQGVkLmFjLnVrggEAMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEE
+BQADgYEAh0KlhSd3LVPVuiCV/o0IFZj5lblRqTSK6dB/U+hWt8CYYKDqPYRRMLUd
+UUCo2ybfRePZ0C0fTDPvg6Pei05nrp1z8U0aBxPOvyQ0BOB2vQImwf030HQqluDo
+gQWZzWAC9UmvvrD4v1mJRSCi5n3VFIZNXM8xGMCOZshVdZeDIdo=
+-----END CERTIFICATE-----
+</ca>
+tls-remote openvpn.inf.ed.ac.uk
+<tls-auth>
+-----BEGIN OpenVPN Static key V1-----
+a188b2d2654b2ebbcbf307cc30c83e15
+c737320d4b4b6b4f0960b1f06ea6e50f
+75ee356a4ac906d1804414cf2498bf1c
+b7ebe58a5d3fef0b988508dbe3363800
+1f835576ee8796ddc0303e65a5cf8928
+e3d933eb6afde2b0bb6d4ba6daf9ca56
+42a7ffed4d578f333ad95463596a08ff
+34a9eb8f8ef1fcbad1681942d4312a60
+6d17baa0b1d3c723f1acf59bc05026c2
+619d84142815adec30a5a85de5c19243
+612bf39fbe20da1e6d4c6ef28ac679e1
+489dcc153a69b98a3ea1418691916510
+e4dcd138599484c5555db514909adbd9
+a7a31682a4045b9185b32b2dfc1d8161
+6992a620636c8a3214b895228e1f5e0a
+e5cff20436bf49071050c7c594b8e04d
+-----END OpenVPN Static key V1-----
+</tls-auth>
+auth-user-pass
+
+comp-lzo
+verb 3
