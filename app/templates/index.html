@@ -49,6 +49,43 @@
             google.maps.event.addDomListener(mapDiv, 'click', addCircles);
         }
 
+
+        function addPoints(data) {
+
+            for (var index in data["1"]) {
+                var positiveOptions = {
+                    strokeColor: '#FFFF00',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 0,
+                    fillColor: '#FF0000',
+                    fillOpacity: 0.6,
+                    map: map,
+                    center: new google.maps.LatLng(data["1"][index]["latitude"],
+                                data["1"][index]['longitude']),
+                    radius: 300
+                };
+                // Add this circle to the map
+                posCircle = new google.maps.Circle(positiveOptions);
+            }
+
+            for (var index in data["-1"]) {
+                var negativeOptions = {
+                    strokeColor: '#0000FF',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 0,
+                    fillColor: '#0000FF',
+                    fillOpacity: 0.6,
+                    map: map,
+                    center: new google.maps.LatLng(data["-1"][index]["latitude"],
+                                data["-1"][index]['longitude']),
+                    radius: 300
+                };
+                // Add this circle to the map
+                negCircle = new google.maps.Circle(negativeOptions);
+            }
+
+        }
+
         function addCircles() {
 
             for (var circle in positives) {
@@ -129,8 +166,10 @@
                     method: "POST",
                     complete: function (a, b) {
                         var respJSON = $.parseJSON(a.responseText);
-                        console.log(respJSON)
-                        alert(respJSON["1"][0]['latitude'])
+                        console.log(respJSON);
+                        //TODO should check if any are empty
+                        addPoints(respJSON);
+{#                        alert(respJSON["1"][0]['latitude'])#}
                         //TODO Delete
 {#                        var sentimentData = [];#}
 {#                        pointArray.clear();#}
