@@ -182,6 +182,7 @@
 
             if (newDate == "Stream") {
                 alert("Stream!");
+                //TODO listen for tweets and append to pointsJSON
             } else {
                 $.ajax("/get_coords", {
                     data: {'date': data.item.value},
