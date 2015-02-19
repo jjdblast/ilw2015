@@ -20,14 +20,8 @@ def get_map_coords():
     new_date_string = "19-02-2015.txt"
 
     d = parse(new_date_string)
-    points = []
-    if (int(request.form["offset"])==0):
-        points.append({"location":(55.951663, -3.206273), "weight": 10})
-        points.append({"location":(55.950000, -3.206273), "weight": 10})
-    elif (int(request.form["offset"])==10):
-        points.append({"location":(55.950000, -3.160000), "weight": 10})
-        points.append({"location":(55.945555, -3.162111), "weight": 10})
-    j_points = json.dumps({"points":points})
+
+    j_points = json.dumps(d)
     return j_points
 
 

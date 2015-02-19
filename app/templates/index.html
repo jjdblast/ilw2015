@@ -122,15 +122,15 @@
                 $("#slider_value").html(dateString);
             },
             stop: function (event, ui) {
-                console.log(ui);
+{#                console.log(ui);#}
                 $.ajax("/get_coords", {
                     //TODO Change to calculate the new date here and just send that.
                     data: {'offset': ui.value, 'initial_date': formatDate(initialDate)},
                     method: "POST",
                     complete: function (a, b) {
                         var respJSON = $.parseJSON(a.responseText);
-
-
+                        console.log(respJSON)
+                        alert(respJSON["1"][0]['latitude'])
                         //TODO Delete
 {#                        var sentimentData = [];#}
 {#                        pointArray.clear();#}
