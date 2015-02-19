@@ -5,10 +5,10 @@ import json
 
 from app import app
 import datetime
+from parse import parse
 
 @app.route("/get_coords", methods=["GET", 'POST'])
 def get_map_coords():
-    #TODO Now we will fake the results
     initial_date = datetime.datetime.strptime(request.form["initial_date"], "%d/%m/%y")
     new_date = datetime.timedelta(days=int(request.form['offset'])) + initial_date
     print("Initial date is: ")
@@ -17,11 +17,9 @@ def get_map_coords():
     print("New date is: ")
     new_date_string = new_date.strftime("%d-%m-%y")
     print(new_date_string)
+    new_date_string = "19-02-2015.txt"
 
-    # The file names of the data points
-    date_file_name_pos = new_date_string + "-pos.dp"
-    date_file_name_neg = new_date_string + "-neg.dp"
-
+    d = parse(new_date_string)
     points = []
     if (int(request.form["offset"])==0):
         points.append({"location":(55.951663, -3.206273), "weight": 10})
