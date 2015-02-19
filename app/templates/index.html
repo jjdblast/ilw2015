@@ -20,16 +20,16 @@
                         <div id="slider" class="col-md-9 pull-left"></div>
                         <div class="col-md-1 pull-left"><h3 id="slider_value"></h3></div>
                     </div>
-                        <div class="col-md-6 pull-left">
-                            <h2 id="select_date_text">Please select a date: </h2>
-                        </div>
-                        <div class="col-md-5 pull-right">
-                            <select name="date_selector" id="date_selector" class="form-control">
-                                {% for date in available_dates %}
-                                    <option>{{ date }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
+                    <div class="col-md-6 pull-left">
+                        <h2 id="select_date_text">Please select a date: </h2>
+                    </div>
+                    <div class="col-md-5 pull-right">
+                        <select name="date_selector" id="date_selector" class="form-control">
+                            {% for date in available_dates %}
+                                <option>{{ date }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
                     {# Add button here for streaming #}
 
@@ -175,29 +175,34 @@
     $("#date_selector").selectmenu({
         change: function (event, data) {
             var newDate = data.item.value;
-            $.ajax("/get_coords", {
-                data: {'date': data.item.value},
-                method: "POST",
-                complete: function (a, b) {
-                    var respJSON = $.parseJSON(a.responseText);
-                    console.log(respJSON);
-                    if (jsonIsEmpty(respJSON)) {
-                        clearPointsOnMap();
-                        counter = 0;
-                        posNegMod = 0;
-                        alert("No data for that day!");
-                        pointsJSON = $.parseJSON("{}");
-                    } else {
-                        clearPointsOnMap();
-                        counter = 0;
-                        posNegMod = 0;
-                        pointsJSON = respJSON;
+            clearPointsOnMap();
+            counter = 0;
+            posNegMod = 0;
+            pointsJSON = $.parseJSON("{}");
 
-                        {#                            addPoints(respJSON);#}
+            if (newDate == "Stream") {
+                alert("Stream!");
+            } else {
+                $.ajax("/get_coords", {
+                    data: {'date': data.item.value},
+                    method: "POST",
+                    complete: function (a, b) {
+                        var respJSON = $.parseJSON(a.responseText);
+                        console.log(respJSON);
+                        if (jsonIsEmpty(respJSON)) {
+
+                            alert("No data for that day!");
+                            pointsJSON = $.parseJSON("{}");
+                        } else {
+
+                            pointsJSON = respJSON;
+
+                            {#                            addPoints(respJSON);#}
+                        }
+
                     }
-
-                }
-            })
+                })
+            }
         }
     });
     {#        $("#slider_value").html(dateString);#}
