@@ -10,7 +10,11 @@ def index():
                        "11-02-15",
                        "12-02-15",
                        "13-02-15",
-                       "14-02-15"]
+                       "14-02-15",
+                       "15-02-15",
+                       "16-02-15",
+                       "17-02-15",
+                       "19-02-15"]
     return render_template("index.html",
                            title='Home',
                            available_dates=available_dates,

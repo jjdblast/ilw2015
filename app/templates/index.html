@@ -21,8 +21,8 @@
                         <div class="col-md-1 pull-left"><h3 id="slider_value"></h3></div>
                     </div>
                     <div class="container">
-                        <div class="col-md-2">
-                        <select multiple class="form-control">
+                        <div class="col-md-5">
+                        <select name="date_selector" id="date_selector" class="form-control">
                             {% for date in available_dates %}
                             <option>{{ date }}</option>
                             {% endfor %}
@@ -167,9 +167,15 @@
                 + year;
         }
 {#        var initialDate = "15/02/2015";#}
-        var initialDate = new Date(15,01,09);
+{#        var initialDate = new Date(15,01,09);#}
+        var initialDate = new Date(15, 01, 09);
 {#        initialDate.setDate(initialDate.getDate() + 2);#}
         var dateString = formatDate(initialDate);
+        $("#date_selector").selectmenu({
+                change: function(event, data) {
+                    var newDate = data.item.value;
+                }
+        });
         $("#slider_value").html(dateString);
         $("#slider").slider({
             //TODO Should be this and make dynamic with hours and days
