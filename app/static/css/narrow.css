@@ -79,15 +79,15 @@ body {
 }
 
 #slider {
-    margin-left: 5px;
+    margin-left: 10px;
     margin-right: 5px;
     margin-top: 30px;
 }
 
 
 #slider_value {
-    margin-left: 40px;
-    margin-right: 40px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .map-canvas {

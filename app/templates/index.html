@@ -17,8 +17,9 @@
                     </div>
 
                     <div class="container">
-                        <div id="slider" class=" col-md-10"></div>
-                        <div class=" col-md-1"><h3 id="slider_value"></h3></div>
+                        <div id="slider" class="col-md-9 pull-left"></div>
+                        <div class="col-md-1 pull-left"><h3 id="slider_value"></h3></div>
+
                     </div>
                 </div>
             </div>
@@ -38,9 +39,6 @@
         $(document).ready(function () {
 
             var sentimentData = [
-                {#                {location: new google.maps.LatLng(55.951663, -3.206273), weight: 5},#}
-                {#                {location: new google.maps.LatLng(55.954708, -3.302416), weight: 1},#}
-                {#                {location: new google.maps.LatLng(55.97194, -3.224334), weight: 1},#}
                 {location: new google.maps.LatLng(55.959472, -3.249847), weight: 3}
             ];
 
@@ -98,15 +96,28 @@
 
         });
 
-
-        $("#slider_value").html(5);
+        function formatDate(d) {
+            return d.getDate() + "/"
+                + (d.getMonth() +1 )+ "/"
+                + d.getYear();
+        }
+{#        var initialDate = "15/02/2015";#}
+        var initialDate = new Date(2015,01,27);
+{#        initialDate.setDate(initialDate.getDate() + 2);#}
+        var dateString = formatDate(initialDate);
+        $("#slider_value").html(dateString);
         $("#slider").slider({
-            //TODO make dynamic with hours and days
-            value: 5,
+            //TODO Should be this and make dynamic with hours and days
+{#            value: initialDate,#}
+            value: 0,
             min: 0,
             max: 10,
             slide: function (event, ui) {
-                $("#slider_value").html(ui.value);
+                var newDate = new Date(initialDate);
+                newDate.setDate(initialDate.getDate() + ui.value);
+                var dateString = formatDate(newDate);
+{#                var newDate = initialDate.getDate() + 1;#}
+                $("#slider_value").html(dateString);
             },
             stop: function (event, ui) {
                 console.log(ui);
