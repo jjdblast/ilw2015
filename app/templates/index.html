@@ -37,7 +37,7 @@
     <script>
 
         // Not sure if this works like this
-        var map, pointsOnMap;
+        var map, pointsOnMap, pointsJSON, started, counter;
         function initialize() {
             // Create the map
             var mapDiv = document.getElementById('map-canvas');
@@ -45,8 +45,52 @@
             // Specify map style
             map.setOptions({styles: styles});
             pointsOnMap = [];
+            setInterval(addPoint,10);
+            started = false;
+            pointsJSON = $.parseJSON("{}")
+            counter = 0;
+            posNegMod = 0;
         }
 
+        function addPoint() {
+            if(!jsonIsEmpty(pointsJSON)) {
+                // If this is true, go for positive
+                if ((posNegMod % 2) == 0 && counter < pointsJSON["1"].length) {
+                    var pt = new google.maps.LatLng(pointsJSON["1"][counter]["latitude"],
+                            pointsJSON["1"][counter]["longitude"]);
+                    counter++;
+                    var positiveOptions =
+                    {
+                        strokeColor: '#ffff00',
+                        strokeOpacity: 0.5,
+                        strokeWeight: 0,
+                        fillColor: '#ffff00',
+                        fillOpacity: 0.3,
+                        map: map,
+                        center: pt,
+                        radius: 100
+                    };
+                    pointsOnMap.push(new google.maps.Circle(positiveOptions));
+                } else if (counter < pointsJSON["-1"].length) {
+                    var pt = new google.maps.LatLng(pointsJSON["-1"][counter]["latitude"],
+                            pointsJSON["-1"][counter]["longitude"]);
+                    counter++;
+                    var negativeOptions =
+                    {
+                        strokeColor: '#0000FF',
+                        strokeOpacity: 0.5,
+                        strokeWeight: 0,
+                        fillColor: '#0000FF',
+                        fillOpacity: 0.3,
+                        map: map,
+                        center: pt,
+                        radius: 100
+                    };
+                    pointsOnMap.push(new google.maps.Circle(negativeOptions));
+                }
+                posNegMod++;
+            }
+        }
 
         function addPoints(data) {
             clearPointsOnMap();
@@ -138,9 +182,13 @@
                         var respJSON = $.parseJSON(a.responseText);
                         console.log(respJSON);
                         if (jsonIsEmpty(respJSON)) {
+                            alert(Object.keys(respJSON).length);
                             alert("No data for that day!")
                         } else {
-                            addPoints(respJSON);
+                            clearPointsOnMap();
+                            pointsJSON = respJSON;
+
+{#                            addPoints(respJSON);#}
                         }
 
                     }
@@ -149,8 +197,10 @@
         });
 
     function jsonIsEmpty(jsonObject) {
+
         if (Object.keys(jsonObject).length == 0) {
             return true;
+
         }
         return false;
     }
