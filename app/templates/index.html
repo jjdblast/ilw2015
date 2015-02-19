@@ -29,72 +29,65 @@
 
 {% block scripts %}
 
-    <script src="https://maps.googleapis.com/maps/api/js?libraries=visualization,drawing,key=AIzaSyBmROUiZ37aAcA_dxjlwnkdmEBW3qIxos0"></script>
+    <script
+		src="https://maps.googleapis.com/maps/api/js?libraries=visualization,drawing,key=AIzaSyBmROUiZ37aAcA_dxjlwnkdmEBW3qIxos0">
+    </script>
+    <script src={{ url_for('static', filename='js/mapOptions.js')}}></script>
+    <script src={{ url_for('static', filename='js/negatives.js')}}></script>
+    <script src={{ url_for('static', filename='js/positives.js')}}></script>
 
     <script>
+
         // Not sure if this works like this
-        var pointArray;
-        var map, heatmap;
+        var posCircle, negCircle, map;
+        function initialize() {
+            // Create the map
+            var mapDiv = document.getElementById('map-canvas');
+            map = new google.maps.Map(mapDiv, mapOptions);
+            // Specify map style
+            map.setOptions({styles: styles});
+            google.maps.event.addDomListener(mapDiv, 'click', addCircles);
+        }
 
-        $(document).ready(function () {
+        function addCircles() {
 
-            var sentimentData = [
-                {location: new google.maps.LatLng(55.959472, -3.249847), weight: 3}
-            ];
-
-            function initialize() {
-                var mapOptions = {
-                    zoom: 13,
-                    center: new google.maps.LatLng(55.953, -3.188),
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
+            for (var circle in positives) {
+                var positiveOptions = {
+                    strokeColor: '#FFFF00',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 0,
+                    fillColor: '#FF0000',
+                    fillOpacity: 0.6,
+                    map: map,
+                    center: positives[circle],
+                    radius: 300
                 };
-
-                map = new google.maps.Map(document.getElementById('map-canvas'),
-                        mapOptions);
-
-                // Change this to change heatmap
-                pointArray = new google.maps.MVCArray(sentimentData);
-
-                heatmap = new google.maps.visualization.HeatmapLayer({
-                    data: pointArray
-                });
-                heatmap.setMap(map);
-
+                // Add this circle to the map
+                posCircle = new google.maps.Circle(positiveOptions);
             }
 
-            function toggleHeatmap() {
-                heatmap.setMap(heatmap.getMap() ? null : map);
+            for (var circle in negatives) {
+                var negativeOptions = {
+                    strokeColor: '#0000FF',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 0,
+                    fillColor: '#0000FF',
+                    fillOpacity: 0.6,
+                    map: map,
+                    center: positives[circle],
+                    radius: 300
+                };
+                // Add this circle to the map
+                negCircle = new google.maps.Circle(negativeOptions);
             }
 
-            function changeGradient() {
-                var gradient = [
-                    'rgba(165,0,38, 0)',
-                    'rgb(222,119,174)',
-                    'rgb(253,224,239)',
-                    'rgb(230,245,208)',
-                    'rgb(184,225,134)',
-                    'rgb(127,188,65)'
-                ]
-                heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
-            }
+        }
 
-            function changeRadius() {
-                heatmap.set('radius', heatmap.get('radius') ? null : 30);
-            }
+        function showAlert() {
+            window.alert('Jess is da best');
+        }
 
-            function changeOpacity() {
-                heatmap.set('opacity', heatmap.get('opacity') ? null : 1);
-            }
-
-            google.maps.event.addDomListener(window, 'load', initialize);
-
-            function startup() {
-                changeRadius();
-                changeOpacity();
-                changeGradient();
-            }
-
-        });
+        google.maps.event.addDomListener(window, 'load', initialize);
 
         function formatDate(d) {
 
@@ -137,19 +130,20 @@
                     complete: function (a, b) {
                         var respJSON = $.parseJSON(a.responseText);
 
+
                         //TODO Delete
-                        var sentimentData = [];
-                        pointArray.clear();
-
-                        for (var i = 0; i < respJSON["points"].length; i++) {
-                            sentimentData.push({location: new google.maps.LatLng(respJSON["points"][i]["location"][0], respJSON["points"][i]["location"][1]),
-                                weight: respJSON["points"][i]["weight"]});
-
-                        }
-                        // Change this to change heatmap
-
-                        pointArray = new google.maps.MVCArray(sentimentData);
-                        heatmap.setData(pointArray)
+{#                        var sentimentData = [];#}
+{#                        pointArray.clear();#}
+{##}
+{#                        for (var i = 0; i < respJSON["points"].length; i++) {#}
+{#                            sentimentData.push({location: new google.maps.LatLng(respJSON["points"][i]["location"][0], respJSON["points"][i]["location"][1]),#}
+{#                                weight: respJSON["points"][i]["weight"]});#}
+{##}
+{#                        }#}
+{#                        // Change this to change heatmap#}
+{##}
+{#                        pointArray = new google.maps.MVCArray(sentimentData);#}
+{#                        heatmap.setData(pointArray)#}
 
                     }
                 })

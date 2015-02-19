@@ -9,18 +9,19 @@ import datetime
 @app.route("/get_coords", methods=["GET", 'POST'])
 def get_map_coords():
     #TODO Now we will fake the results
-    # print(type(request.form["offset"]))
-    # print(request.form["offset"])
-    print("Initial Date is: ")
-    print(request.form['initial_date'])
-    date_list = request.form["initial_date"].split('/')
-    # print(date_list)
-    print("Actual date is: ")
-    d = datetime.datetime.strptime(request.form["initial_date"], "%d/%m/%y")
-    print(d)
-    new_date = datetime.timedelta(days=int(request.form['offset'])) + d
+    initial_date = datetime.datetime.strptime(request.form["initial_date"], "%d/%m/%y")
+    new_date = datetime.timedelta(days=int(request.form['offset'])) + initial_date
+    print("Initial date is: ")
+    initial_date_string = initial_date.strftime("%d-%m-%y")
+    print(initial_date_string)
     print("New date is: ")
-    print(new_date)
+    new_date_string = new_date.strftime("%d-%m-%y")
+    print(new_date_string)
+
+    # The file names of the data points
+    date_file_name_pos = new_date_string + "-pos.dp"
+    date_file_name_neg = new_date_string + "-neg.dp"
+
     points = []
     if (int(request.form["offset"])==0):
         points.append({"location":(55.951663, -3.206273), "weight": 10})
