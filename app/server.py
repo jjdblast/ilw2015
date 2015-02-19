@@ -11,9 +11,9 @@ def get_map_coords():
     print(request.form["data_value"])
     points = []
     points.append({"location":(55.951663, -3.206273), "weight": 10})
-    points.append({"location":(55.954708, -3.302416), "weight": 12})
-    points.append({"location":(55.97194, -3.224334), "weight": 2})
-    points.append({"location":(55.959472, -3.249847), "weight": 4})
+    points.append({"location":(55.950000, -3.206273), "weight": 10})
+    points.append({"location":(55.950000, -3.160000), "weight": 10})
+    points.append({"location":(55.945555, -3.162111), "weight": 10})
     j_points = json.dumps({"points":points})
     print(j_points)
     print({"points": points})
