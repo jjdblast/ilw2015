@@ -1,51 +1,76 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Simple Leaflet Map with Heatmap </title>
-    <meta charset="utf-8" />
-    <link 
-        rel="stylesheet" 
-        href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css"
-    />
-</head>
-<body>
-    <div id="map" style="width: 600px; height: 400px"></div>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Circles</title>
+    <style>
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
+      }
+    </style>
+    <script 
+		src="https://maps.googleapis.com/maps/api/js?libraries=visualization,drawing,key=AIzaSyBmROUiZ37aAcA_dxjlwnkdmEBW3qIxos0">
+	</script>
+	<script src="C:\Users\Charlie\Desktop\map\positives.js"></script>
+    <script src="C:\Users\Charlie\Desktop\map\negatives.js"></script>
+	<script src="C:\Users\Charlie\Desktop\map\mapOptions.js"></script>
+	<script>
 
-    <script
-       src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js">
-    </script>
-    
-    <script
-       src="http://leaflet.github.io/Leaflet.heat/dist/leaflet-heat.js">
-    </script>
-  <script src="C:\Users\Charlie\Desktop\positives.js"></script>
-  <script src="C:\Users\Charlie\Desktop\negatives.js"></script>
-
-    <script>
-
-        var map = L.map('map').setView([55.953, -3.188], 12);
-        mapLink = 
-            '<a href="http://openstreetmap.org">OpenStreetMap</a>';
-        L.tileLayer(
-            'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; ' + mapLink + ' Contributors',
-            maxZoom: 18,
-        }).addTo(map);
-        
-        var heat = L.heatLayer(positive,{
-            radius: 15,
-			gradient: {1: 'red'},
-            blur: 25, 
-            maxZoom: 17,
-        }).addTo(map);
+		var posCircle, negCircle, map;
+		function initialize() {
+			
+			// Create the map
+			var mapDiv = document.getElementById('map-canvas');
+			map = new google.maps.Map(mapDiv, mapOptions);
+			// Specify map style
+			map.setOptions({styles: styles});
+			google.maps.event.addDomListener(mapDiv, 'click', addCircles);		}
+			
+		function addCircles() {
+			
+			for (var circle in positives){
+				var positiveOptions = {
+				  strokeColor: '#FFFF00',
+				  strokeOpacity: 0.8,
+				  strokeWeight: 0,
+				  fillColor: '#FF0000',
+				  fillOpacity: 0.6,
+				  map: map,
+				  center: positives[circle],
+				  radius: 300
+				};
+			// Add this circle to the map
+				posCircle = new google.maps.Circle(positiveOptions);
+			};
+			for (var circle in negatives){
+				var negativeOptions = {
+				  strokeColor: '#0000FF',
+				  strokeOpacity: 0.8,
+				  strokeWeight: 0,
+				  fillColor: '#0000FF',
+				  fillOpacity: 0.6,
+				  map: map,
+				  center: positives[circle],
+				  radius: 300
+				};
+			// Add this circle to the map
+				negCircle = new google.maps.Circle(negativeOptions); 
+			 };
+		}	
 		
-		var heat1 = L.heatLayer(negative,{
-            radius: 15,
-			gradient: {1: 'blue'},
-            blur: 25, 
-            maxZoom: 17,
-        }).addTo(map);
-    
+		function showAlert() {
+			window.alert('Jess is da best');
+		}
+		
+		google.maps.event.addDomListener(window, 'load', initialize);
+
+
     </script>
-</body>
+  </head>
+  <body>
+    <div id="map-canvas"></div>
+  </body>
 </html>
