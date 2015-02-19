@@ -18,7 +18,9 @@ def get_map_coords():
     print("Actual date is: ")
     d = datetime.datetime.strptime(request.form["initial_date"], "%d/%m/%y")
     print(d)
-
+    new_date = datetime.timedelta(days=int(request.form['offset'])) + d
+    print("New date is: ")
+    print(new_date)
     points = []
     if (int(request.form["offset"])==0):
         points.append({"location":(55.951663, -3.206273), "weight": 10})

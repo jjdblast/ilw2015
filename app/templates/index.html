@@ -131,6 +131,7 @@
             stop: function (event, ui) {
                 console.log(ui);
                 $.ajax("/get_coords", {
+                    //TODO Change to calculate the new date here and just send that.
                     data: {'offset': ui.value, 'initial_date': formatDate(initialDate)},
                     method: "POST",
                     complete: function (a, b) {
