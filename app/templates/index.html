@@ -33,13 +33,11 @@
 		src="https://maps.googleapis.com/maps/api/js?libraries=visualization,drawing,key=AIzaSyBmROUiZ37aAcA_dxjlwnkdmEBW3qIxos0">
     </script>
     <script src={{ url_for('static', filename='js/mapOptions.js')}}></script>
-    <script src={{ url_for('static', filename='js/negatives.js')}}></script>
-    <script src={{ url_for('static', filename='js/positives.js')}}></script>
 
     <script>
 
         // Not sure if this works like this
-        var posCircle, negCircle, map;
+        var map, pointsOnMap;
         function initialize() {
             // Create the map
             var mapDiv = document.getElementById('map-canvas');
@@ -47,11 +45,12 @@
             // Specify map style
             map.setOptions({styles: styles});
             google.maps.event.addDomListener(mapDiv, 'click', addCircles);
+            pointsOnMap = [];
         }
 
 
         function addPoints(data) {
-
+            clearCircles();
             for (var index in data["1"]) {
                 var positiveOptions = {
                     strokeColor: '#FFFF00',
@@ -65,7 +64,7 @@
                     radius: 300
                 };
                 // Add this circle to the map
-                posCircle = new google.maps.Circle(positiveOptions);
+                pointsOnMap.push(new google.maps.Circle(positiveOptions));
             }
 
             for (var index in data["-1"]) {
@@ -81,11 +80,17 @@
                     radius: 300
                 };
                 // Add this circle to the map
-                negCircle = new google.maps.Circle(negativeOptions);
+                pointsOnMap.push(new google.maps.Circle(negativeOptions));
+
             }
 
         }
 
+        function clearCircles() {
+            for (var i in pointsOnMap) {
+                pointsOnMap[i].setMap(null);
+            }
+        }
         function addCircles() {
 
             for (var circle in positives) {

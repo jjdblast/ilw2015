@@ -24,7 +24,7 @@ def login():
 
 @app.route('/about_us')
 def about_us():
-    students = ["Theo", "Rafael", "Charlie", "Harri"]
+    students = ["Theo Pavlakou", "Rafael Karampatsis", "Charlie Nash", "Harri Edwards"]
     return render_template("about_us.html",
                            title='About us',
                            students=students,
