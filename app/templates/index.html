@@ -61,6 +61,7 @@
                     data: pointArray
                 });
                 heatmap.setMap(map);
+
             }
 
             function toggleHeatmap() {
@@ -114,25 +115,21 @@
                     method: "POST",
                     complete: function (a, b) {
                         var respJSON = $.parseJSON(a.responseText);
-                        {#                        alert(respJSON["points"][0]["location"]);#}
-                        {#                        var sentimentData = [#}
-                        {#                {location: new google.maps.LatLng(55.951663, -3.206273), weight: 5},#}
+
                         //TODO Delete
                         var sentimentData = [];
-                        for (var i = 0; i < respJSON["points"].length; i++) {
-                            sentimentData.push({location: new google.maps.LatLng(respJSON["points"][i]["location"]),
-                                weight: respJSON["points"][i]["weight"]});
-                        }
-{#                        alert(sentimentData);#}
-                        // Change this to change heatmap
-                        pointArray = new google.maps.MVCArray(sentimentData);
+                        pointArray.clear();
 
-                        heatmap = new google.maps.visualization.HeatmapLayer({
-                            data: pointArray
-                        });
-                        heatmap.setMap(map);
-{#                        window.alert(a.responseText);#}
-{#                        console.log(a);#}
+                        for (var i = 0; i < respJSON["points"].length; i++) {
+                            sentimentData.push({location: new google.maps.LatLng(respJSON["points"][i]["location"][0], respJSON["points"][i]["location"][1]),
+                                weight: respJSON["points"][i]["weight"]});
+
+                        }
+                        // Change this to change heatmap
+
+                        pointArray = new google.maps.MVCArray(sentimentData);
+                        heatmap.setData(pointArray)
+
                     }
                 })
             }
