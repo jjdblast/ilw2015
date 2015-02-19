@@ -17,12 +17,12 @@ def get_map_coords():
     print("New date is: ")
     new_date_string = new_date.strftime("%d-%m-%y")
     print(new_date_string)
-    new_date_string = "19-02-2015.txt"
+    file_string = new_date_string+".txt"
     # new_date_string = "19-02-20159.txt"
 
-    d = parse(new_date_string)
+    dict_to_jsonify = parse(file_string)
 
-    j_points = json.dumps(d)
+    j_points = json.dumps(dict_to_jsonify)
     return j_points
 
 

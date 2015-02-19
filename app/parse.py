@@ -13,7 +13,9 @@ def parse(file_name):
     path=os.path.join(current_path, file_name)
     # path = file_name
 
+    print(path)
     if not os.path.isfile(path):
+        print("  Path does not exists: {0}".format(path))
         return {}
     f=open(path, "r")
     for line in f.readlines():
@@ -21,8 +23,11 @@ def parse(file_name):
         if len(line)==0:
             continue
         line=line.split("\t")
+        print(line)
+        print(line[2])
         tweet={"latitude":line[2],
                "longitude":line[1]}
+        print("here")
         tweets[line[0]].append(tweet)
     f.close()
     return tweets
