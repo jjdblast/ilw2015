@@ -44,86 +44,55 @@
             map = new google.maps.Map(mapDiv, mapOptions);
             // Specify map style
             map.setOptions({styles: styles});
-            google.maps.event.addDomListener(mapDiv, 'click', addCircles);
             pointsOnMap = [];
         }
 
 
         function addPoints(data) {
-            clearCircles();
+            clearPointsOnMap();
             for (var index in data["1"]) {
                 var positiveOptions = {
-                    strokeColor: '#FFFF00',
-                    strokeOpacity: 0.8,
+                    strokeColor: '#ffff00',
+                    strokeOpacity: 0.5,
                     strokeWeight: 0,
-                    fillColor: '#FF0000',
-                    fillOpacity: 0.6,
+                    fillColor: '#ffff00',
+                    fillOpacity: 0.3,
                     map: map,
                     center: new google.maps.LatLng(data["1"][index]["latitude"],
                                 data["1"][index]['longitude']),
-                    radius: 300
+                    radius: 100
                 };
                 // Add this circle to the map
+{#                addCircle(positiveOptions);#}
                 pointsOnMap.push(new google.maps.Circle(positiveOptions));
             }
 
             for (var index in data["-1"]) {
                 var negativeOptions = {
                     strokeColor: '#0000FF',
-                    strokeOpacity: 0.8,
+                    strokeOpacity: 0.5,
                     strokeWeight: 0,
                     fillColor: '#0000FF',
-                    fillOpacity: 0.6,
+                    fillOpacity: 0.3,
                     map: map,
                     center: new google.maps.LatLng(data["-1"][index]["latitude"],
                                 data["-1"][index]['longitude']),
-                    radius: 300
+                    radius: 100
                 };
                 // Add this circle to the map
+{#                addCircle(negativeOptions);#}
                 pointsOnMap.push(new google.maps.Circle(negativeOptions));
 
             }
 
         }
 
-        function clearCircles() {
+        function clearPointsOnMap() {
             for (var i in pointsOnMap) {
                 pointsOnMap[i].setMap(null);
             }
         }
-        function addCircles() {
 
-            for (var circle in positives) {
-                var positiveOptions = {
-                    strokeColor: '#FFFF00',
-                    strokeOpacity: 0.8,
-                    strokeWeight: 0,
-                    fillColor: '#FF0000',
-                    fillOpacity: 0.6,
-                    map: map,
-                    center: positives[circle],
-                    radius: 300
-                };
-                // Add this circle to the map
-                posCircle = new google.maps.Circle(positiveOptions);
-            }
-
-            for (var circle in negatives) {
-                var negativeOptions = {
-                    strokeColor: '#0000FF',
-                    strokeOpacity: 0.8,
-                    strokeWeight: 0,
-                    fillColor: '#0000FF',
-                    fillOpacity: 0.6,
-                    map: map,
-                    center: positives[circle],
-                    radius: 300
-                };
-                // Add this circle to the map
-                negCircle = new google.maps.Circle(negativeOptions);
-            }
-
-        }
 
         function showAlert() {
             window.alert('Jess is da best');

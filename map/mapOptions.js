@@ -1,5 +1,5 @@
 var mapOptions = {
-				zoom: 12,
+				zoom: 1,
 				center: new google.maps.LatLng(55.94, -3.2),
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 			};

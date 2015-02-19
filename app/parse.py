@@ -23,11 +23,8 @@ def parse(file_name):
         if len(line)==0:
             continue
         line=line.split("\t")
-        print(line)
-        print(line[2])
         tweet={"latitude":line[2],
                "longitude":line[1]}
-        print("here")
         tweets[line[0]].append(tweet)
     f.close()
     return tweets
