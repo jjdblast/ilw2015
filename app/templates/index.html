@@ -182,7 +182,11 @@
                         var respJSON = $.parseJSON(a.responseText);
                         console.log(respJSON);
                         if (jsonIsEmpty(respJSON)) {
-                            alert("No data for that day!")
+                            clearPointsOnMap();
+                            counter = 0;
+                            posNegMod = 0;
+                            alert("No data for that day!");
+                            pointsJSON = $.parseJSON("{}");
                         } else {
                             clearPointsOnMap();
                             counter = 0;
