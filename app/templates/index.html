@@ -7,8 +7,8 @@
                 <div class="row">
                     <div class="container">
                         <p>Welcome to CitySentiment! Below is a map of Edinburgh with an overlay of the sentiment
-                            of parts of the city. The more blue a region is, the more positive the comments coming from
-                            that region are. The more red, the more negative. Please select the dates for which you
+                            of parts of the city. The more blue a region is, the more negative the comments coming from
+                            that region are. The more yellow, the more positive. Please select the dates for which you
                             would
                             like to see the sentiment for.</p>
                     </div>
@@ -182,7 +182,6 @@
                         var respJSON = $.parseJSON(a.responseText);
                         console.log(respJSON);
                         if (jsonIsEmpty(respJSON)) {
-                            alert(Object.keys(respJSON).length);
                             alert("No data for that day!")
                         } else {
                             clearPointsOnMap();
