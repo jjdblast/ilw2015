@@ -12,10 +12,9 @@ def parse(file_name):
     current_path = os.path.dirname(os.path.realpath(__file__)) + directory_name
     path=os.path.join(current_path, file_name)
     # path = file_name
-    f=open(path, "r")
-    f.close()
+
     if not os.path.isfile(path):
-        return None
+        return {}
     f=open(path, "r")
     for line in f.readlines():
         line=line.strip()

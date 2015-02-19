@@ -161,32 +161,29 @@
             stop: function (event, ui) {
 {#                console.log(ui);#}
                 $.ajax("/get_coords", {
-                    //TODO Change to calculate the new date here and just send that.
                     data: {'offset': ui.value, 'initial_date': formatDate(initialDate)},
                     method: "POST",
                     complete: function (a, b) {
                         var respJSON = $.parseJSON(a.responseText);
                         console.log(respJSON);
                         //TODO should check if any are empty
-                        addPoints(respJSON);
-{#                        alert(respJSON["1"][0]['latitude'])#}
-                        //TODO Delete
-{#                        var sentimentData = [];#}
-{#                        pointArray.clear();#}
-{##}
-{#                        for (var i = 0; i < respJSON["points"].length; i++) {#}
-{#                            sentimentData.push({location: new google.maps.LatLng(respJSON["points"][i]["location"][0], respJSON["points"][i]["location"][1]),#}
-{#                                weight: respJSON["points"][i]["weight"]});#}
-{##}
-{#                        }#}
-{#                        // Change this to change heatmap#}
-{##}
-{#                        pointArray = new google.maps.MVCArray(sentimentData);#}
-{#                        heatmap.setData(pointArray)#}
+{#                        addPoints(respJSON);#}
+                        if (jsonIsEmpty(respJSON)) {
+                            alert("No data for that day!")
+                        } else {
+                            addPoints(respJSON);
+                        }
+{#                        addPoints({});#}
 
                     }
                 })
             }
         });
+    function jsonIsEmpty(jsonObject) {
+        if (Object.keys(jsonObject).length == 0) {
+            return true;
+        }
+        return false;
+    }
     </script>
 {% endblock %}

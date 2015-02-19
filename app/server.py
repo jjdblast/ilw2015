@@ -18,6 +18,7 @@ def get_map_coords():
     new_date_string = new_date.strftime("%d-%m-%y")
     print(new_date_string)
     new_date_string = "19-02-2015.txt"
+    # new_date_string = "19-02-20159.txt"
 
     d = parse(new_date_string)
 
