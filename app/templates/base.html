@@ -52,6 +52,12 @@
                     <li>
                 {% endif %}
                 <a href="/about_us">About us</a></li>
+                {% if active_how_it_works %}
+                    <li class="active">
+                        {% else %}
+                    <li>
+                {% endif %}
+                <a href="/how_it_works">How it works</a></li>
             </ul>
         </nav>
 {#        <h2 class="text-muted" href="#">CitySentiment</h2>#}

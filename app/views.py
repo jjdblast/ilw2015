@@ -42,3 +42,11 @@ def about_us():
                            students=students,
                            active_home=False,
                            active_about_us=True)
+
+@app.route('/how_it_works')
+def how_it_works():
+    return render_template("how_it_works.html",
+                           title='About us',
+                           active_home=False,
+                           active_about_us=False,
+                           active_how_it_works=True)
