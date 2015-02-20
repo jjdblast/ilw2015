@@ -12,6 +12,11 @@
  */
 
 
+@font-face {
+    font-family: "Aller";
+    src: url('../fonts/Aller/Aller_Lt.ttf') format('truetype');
+}
+
 /* Component containers
 ----------------------------------*/
 .ui-widget {
@@ -51,10 +56,11 @@
 .ui-state-default,
 .ui-widget-content .ui-state-default,
 .ui-widget-header .ui-state-default {
+    font-family: Aller;
 	border: 1px solid #cccccc;
 	background: #f6f6f6 url("images/ui-bg_glass_100_f6f6f6_1x400.png") 50% 50% repeat-x;
 	font-weight: bold;
-	color: #1c94c4;
+	color: #1EAD1E;
 }
 .ui-state-default a,
 .ui-state-default a:link,
@@ -68,10 +74,10 @@
 .ui-state-focus,
 .ui-widget-content .ui-state-focus,
 .ui-widget-header .ui-state-focus {
-	border: 1px solid #fbcb09;
-	background: #fdf5ce url("images/ui-bg_glass_100_fdf5ce_1x400.png") 50% 50% repeat-x;
+	border: 1px solid #0E8A0E;
+	background: #0E8A0E url("images/ui-bg_glass_100_fdf5ce_1x400.png") 50% 50% repeat-x;
 	font-weight: bold;
-	color: #c77405;
+	color: #0E8A0E;
 }
 .ui-state-hover a,
 .ui-state-hover a:hover,
@@ -81,7 +87,7 @@
 .ui-state-focus a:hover,
 .ui-state-focus a:link,
 .ui-state-focus a:visited {
-	color: #c77405;
+	color: #0E8A0E;
 	text-decoration: none;
 }
 .ui-state-active,
